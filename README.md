@@ -1,5 +1,14 @@
 # Credit_Risk
 
+## Cloning this repo:
+On a terminal...
+- Alternative 1
+Via web URL:
+```git clone https://github.com/DanielDi/Credit_Risk.git```
+- Alternative 2
+Via ssh key:
+```git clone git@github.com:DanielDi/Credit_Risk.git```
+
 ## Requirements
 - docker
 
