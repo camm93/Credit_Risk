@@ -13,3 +13,4 @@ docker build -t docker-dash project/.
 ```
 docker run -p 8050:8050 docker-dash
 ```
+4. Open in a browser http://localhost:8050
