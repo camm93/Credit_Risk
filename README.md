@@ -20,6 +20,6 @@ docker build -t docker-dash project/.
 ```
 3. Run the project:
 ```
-docker run -p 8050:8050 docker-dash
+docker run --name dash-project -it --mount type=bind,source="$(pwd)"/project/app,target=/usr/src/app -p 8050:8050 docker-dash
 ```
 4. Open in a browser http://localhost:8050

@@ -1,5 +1,4 @@
 FROM python:3.9-slim
-# LABEL maintainer "Robin Opdam, robinopdam@hotmail.com"
 
 # set working directory in container
 WORKDIR /usr/src/app
@@ -18,4 +17,3 @@ USER appUser
 
 # Run locally on port 8050
 CMD gunicorn --bind 0.0.0.0:8050 app:server
-

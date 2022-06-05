@@ -34,7 +34,7 @@ def plot_regression(std=10):
     preds = model.predict(x)
 
     layout = go.Layout(
-        title=f"Regression fit example with R squared: {round(r_sq, 3)}",
+        title=f"Regression fit with R squared: {round(r_sq, 3)}",
         height=700,
     )
     fig = go.Figure(layout=layout)
