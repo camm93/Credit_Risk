@@ -367,3 +367,4 @@ sketch
 # .pnp.*
 
 # End of https://www.toptal.com/developers/gitignore/api/python,react,visualstudiocode,jupyternotebooks,node,yarn
+project/data/loans_2015.feather

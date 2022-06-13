@@ -1,9 +1,15 @@
-dash==2.4.1
+# Notebooks
 numpy==1.22.4
+scikit-learn==1.1.1
+plotly==5.8.0
+pandas==1.4.2
+psycopg2
+matplotlib
+pyarrow
+
+# Application
+dash==2.4.1
 dash-bootstrap-components==1.1.0
 dash-core-components==2.0.0
 dash-html-components==2.0.0
-scikit-learn==1.1.1
-plotly==5.8.0
 gunicorn==20.1.0
-pandas==1.4.2
