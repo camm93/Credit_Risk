@@ -3,7 +3,7 @@ import dash_bootstrap_components as dbc
 from dash import dcc
 from dash import html
 from dash.dependencies import Input, Output
-from functions import plot_regression
+from app.functions import plot_regression
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 app.title = "Credit Risk Estimator"
@@ -35,21 +35,24 @@ def dashboard_menu():
 cards = [
     dbc.Card(
         [
-            html.H3("Overview", style={"color": "white", "padding":"16px"})
+            html.H3("Overview")
         ],
+        className="upper-cards",
         color="#F44336"
     ),
     dbc.Card(
         [
-            html.H3("Loans Given", style={"color": "white", "padding":"16px"}),
-            html.H3("Loans Taken", style={"color": "white", "padding":"16px"})
+            html.H3("Loans Given"),
+            html.H3("Loans Taken")
         ],
+        className="upper-cards",
         color="#2196F3"
     ),
     dbc.Card(
         [
-            html.H3("History", style={"color": "white"})
+            html.H3("History")
         ],
+        className="upper-cards",
         color="#009688"
     ),
 ]
@@ -146,7 +149,7 @@ app.layout = html.Div(
                     html.Hr(),
                     html.Div(
                         id="lower-stats",
-                        style={"background-color": "#616161", "padding": "32px 16px"},
+                        className="lower-stats",
                         children=[
                             dbc.Row(
                                 [dbc.Col(
