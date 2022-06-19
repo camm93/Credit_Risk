@@ -3,7 +3,7 @@ import dash_bootstrap_components as dbc
 from dash import dcc
 from dash import html
 from dash.dependencies import Input, Output
-from app.functions import plot_regression
+from app.functions import getStackedBar, plot_regression
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 app.title = "Credit Risk Estimator"
@@ -58,21 +58,21 @@ cards = [
 ]
 
 def stats_table():
-    table_rows = [html.Tr([html.Td("String"), html.Td("Number")]) for i in range(6)]
+    table_rows = [html.Tr([html.Td("Field"), html.Td("15%")]) for i in range(6)]
     table_body = [html.Tbody(table_rows)]
-    return dbc.Table(table_body, bordered=True)
+    return dbc.Table(table_body, bordered=True, hover=True)
 
 more_data_btn = html.Div(
     [
         dbc.Button(
-            "More data", id="more_data_btn", color="secondary"
+            "More data >", id="more_data_btn", color="secondary"
         )
     ]
 )
 
 app.layout = html.Div(
     id="app-container",
-    style={"margin": "10px"},
+    style={"background-color": "#e9ecef"},
     children=[
         # Banner
         html.Div(
@@ -85,10 +85,10 @@ app.layout = html.Div(
                 children=[html.P("Welcome, ", style={"fontSize": 14}), 
                  html.Strong("User", style={"color": "red"})],
                 width=2,
-                style={"padding": "auto"}
+                style={"background-color": "white", "padding": "auto"}
             ),
             dbc.Col(
-                html.H4("My Dashboard", style={"color": "blue"}),
+                html.B("My Dashboard", style={"color": "black", "font-size": 22, "font-family": "Raleway"}),
                 width=10
             )]
         ),
@@ -104,6 +104,7 @@ app.layout = html.Div(
                     #    )
                     # ],
                     width=2,
+                    style={"background-color": "white"},
                 ),
                 # Right column
                 dbc.Col(
@@ -111,7 +112,6 @@ app.layout = html.Div(
                     dbc.Row(
                         id="upper-stats",
                         children=[dbc.Col(card) for card in cards],
-                        style={"margin": "10px"}
                     ),
                     dbc.Row(
                         id="middle-stats",
@@ -137,9 +137,15 @@ app.layout = html.Div(
                         ]
                     ),
                     html.Div(
-                        [html.H5("General Status"),
-                        html.P("Credit Score"),
-                        html.P("Loans available")]
+                        [html.H5("General Stats"),
+                        html.P("000 Credit Score"),
+                        dcc.Graph(className="stacked_bars", figure=getStackedBar(), config={
+                            'staticPlot':True,
+                        }),
+                        html.P("Loans available"),
+                        dcc.Graph(className="stacked_bars", figure=getStackedBar(), config={
+                            'staticPlot':True,
+                        })],
                     ),
                     html.Div(
                         [html.H5("Data"),
@@ -155,6 +161,7 @@ app.layout = html.Div(
                                 [dbc.Col(
                                     [
                                     html.H5("Demographic"),
+                                    html.Hr(),
                                     html.P("Income"),
                                     html.P("Loans"),
                                     html.P("Funded"),
@@ -162,12 +169,14 @@ app.layout = html.Div(
                                 ),
                                 dbc.Col(
                                     [html.H5(""),
+                                    html.Hr(),
                                     html.P("Settlement"),
                                     html.P("Term"),
                                     html.P("Rate"),]
                                 ),
                                 dbc.Col(
                                     [html.H5("Target Users"),
+                                    html.Hr(),
                                     html.P("Users"),
                                     html.P("Active"),
                                     html.P("HeatMap"),]

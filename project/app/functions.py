@@ -51,3 +51,34 @@ def plot_regression(std=10):
     fig.update_layout(fig_layout)
 
     return fig
+
+
+def getStackedBar():
+    print()  
+    fig = go.Figure()
+
+    fig.add_trace(go.Bar(
+        y=[''],
+        x=[15],
+        name="Remaining",
+        orientation='h',
+        marker=dict(
+            color='#F44336',
+            line=dict(color='rgba(246, 78, 139, 1.0)', width=3)
+        ),
+    ))
+    fig.add_trace(go.Bar(
+        y=[''],
+        x=[20],
+        name="Paid",
+        orientation='h',
+        marker=dict(
+            color='rgba(58, 71, 80, 0.6)',
+            line=dict(color='rgba(58, 71, 80, 1.0)', width=3)
+        )
+    ))
+    fig.update_layout(
+        barmode="stack",
+    )
+    fig.update_traces(marker_line_width=0, hovertemplate="%{x}%")
+    return fig
