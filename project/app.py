@@ -3,7 +3,7 @@ import dash_bootstrap_components as dbc
 from dash import dcc
 from dash import html
 from dash.dependencies import Input, Output
-from app.functions import getStackedBar, plot_regression
+from app.functions import plot_regression
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 app.title = "Credit Risk Estimator"
@@ -20,14 +20,10 @@ def dashboard_menu():
         id="dashboard-menu",
         children=[
             html.H4("Dashboard"),
-            dbc.Button("Overview", color="Light", style={"text-align": "left"}),
-            dbc.Button("Loans", color="Light", style={"text-align": "left"}),
-            dbc.Button("History", color="Light", style={"text-align": "left"}),
-            dbc.Button("Settings", color="Light", style={"text-align": "left"}),
-            html.Div(
-                id="intro",
-                children="Explore this app 2."
-            ),
+            dbc.Button("Overview", color="Light", className="menu-btns"),
+            dbc.Button("Loans", color="Light", className="menu-btns"),
+            dbc.Button("History", color="Light", className="menu-btns"),
+            dbc.Button("Settings", color="Light", className="menu-btns"),
         ],
         className="d-grid gap-2",
     )
@@ -72,7 +68,7 @@ more_data_btn = html.Div(
 
 app.layout = html.Div(
     id="app-container",
-    style={"background-color": "#e9ecef"},
+    style={"background-color": "#f3f4f5"},
     children=[
         # Banner
         html.Div(
@@ -83,7 +79,7 @@ app.layout = html.Div(
         dbc.Row(
             [dbc.Col(
                 children=[html.P("Welcome, ", style={"fontSize": 14}), 
-                 html.Strong("User", style={"color": "red"})],
+                          html.Strong("User", style={"color": "red"})],
                 width=2,
                 style={"background-color": "white", "padding": "auto"}
             ),
@@ -98,11 +94,6 @@ app.layout = html.Div(
                 # Left column
                 dbc.Col(
                     dashboard_menu(),
-                    # + [
-                    #    html.Div(
-                    #        ["initial child"], id="output-clientside", style={"display": "none"}
-                    #    )
-                    # ],
                     width=2,
                     style={"background-color": "white"},
                 ),
@@ -139,13 +130,10 @@ app.layout = html.Div(
                     html.Div(
                         [html.H5("General Stats"),
                         html.P("000 Credit Score"),
-                        dcc.Graph(className="stacked_bars", figure=getStackedBar(), config={
-                            'staticPlot':True,
-                        }),
+                        dbc.Progress(label="+25%", style={"height": "40px"}, value=25, color="success"),
                         html.P("Loans available"),
-                        dcc.Graph(className="stacked_bars", figure=getStackedBar(), config={
-                            'staticPlot':True,
-                        })],
+                        dbc.Progress(label="USD 15,000/20,000", style={"height": "40px"}, value=75, color="danger"),
+                        ],
                     ),
                     html.Div(
                         [html.H5("Data"),

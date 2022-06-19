@@ -2,13 +2,14 @@ body {
     font-family: sans-serif;
 }
 h5 {
-    margin: 10px;
+    margin: 15px 0;
 }
 p {
-    margin: 8px;
+    margin: 10px 0;
 }
-#app-container{
+#app-container {
     margin: 10px;
+    padding-right: 10px;
 }
 #more_data_btn {
     border-radius: 0;
@@ -16,21 +17,31 @@ p {
     width: 20%;
 }
 #upper-stats {
-    margin: 5px 0px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 .lower-stats {
     background-color: #616161;
     color: white;
     padding: 32px 16px;
 }
+.lower-stats h5 {
+    margin: 10px;
+}
 .lower-stats hr{
     color: rgb(6, 195, 6);
     height: 5px;
     width: 100%;
 }
+.lower-stats p {
+    margin: 8px;
+}
 .stacked_bars {
     height: 250px;
     padding: 5px;
+}
+.menu-btns {
+    text-align: left;
 }
 .upper-cards {
     border: 1px;
@@ -39,8 +50,9 @@ p {
     justify-content: center;
     padding: 16px;
     text-align: left;
+    color: #f3f4f5
 }
-.upper-cards h3{
+.upper-cards h3 {
     color: white;
     font-weight: normal;
 }
