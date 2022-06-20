@@ -82,3 +82,23 @@ def getStackedBar():
     )
     fig.update_traces(marker_line_width=0, hovertemplate="%{x}%")
     return fig
+
+
+def get_user_stats():
+    return {
+        "Successfully paid loans": 65,
+        "Outstanding loans": 15.7,
+        "Forgiven loans": 5.6,
+        "In progress": 2.1,
+        "Forfeit": 1.9,
+        "Other": 1.5
+    }
+
+
+def loan_balance():
+    return {
+        "credit_score": 700, 
+        "score_increase": 25, 
+        "remaining_debt": 15000, 
+        "original_loan": 20000, 
+    }
