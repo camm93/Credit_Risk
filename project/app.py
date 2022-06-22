@@ -4,7 +4,6 @@ from dash import dcc, html
 from dash.dependencies import Input, Output
 import dash_labs as dl
 
-from callbacks import register_callbacks
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP], plugins=[dl.plugins.pages])
 app.title = "Credit Risk Estimator"
@@ -146,9 +145,6 @@ app.layout = html.Div(
         ),
     ]
 )
-
-
-register_callbacks(app)
 
 
 if __name__ == "__main__":

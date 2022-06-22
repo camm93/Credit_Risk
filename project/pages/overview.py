@@ -1,4 +1,3 @@
-import dash
 import dash_bootstrap_components as dbc
 from dash import dcc, html, Input, Output, callback
 from dash_labs.plugins.pages import register_page

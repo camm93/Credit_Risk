@@ -1,6 +1,6 @@
-import dash
-from dash import html, dcc, callback, Input, Output
+from dash import html
 from dash_labs.plugins.pages import register_page
+
 
 register_page(__name__)
 
