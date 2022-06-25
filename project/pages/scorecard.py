@@ -33,27 +33,27 @@ out_table={"input1":1,"input2":2,"input3":4,"input4":5}
 
 def inputs():
         return dbc.Form(children=[
-        dbc.Label("Loan Type"),
+        dbc.Label("acc_now_delinq"),
         dcc.Input(id="input1", type="text", placeholder="Place your input"),
-        dbc.Label("Loan Type"),
+        dbc.Label("annual_inc"),
         dcc.Input(id="input2", type="text", placeholder="Place your input"),
-        dbc.Label("Loan Type"),
+        dbc.Label("bc_open_to_buy"),
         dcc.Input(id="input3", type="text", placeholder="Place your input"),
-        dbc.Label("Loan Type"),
+        dbc.Label("chargeoff_within_12_mths"),
         dcc.Input(id="input4", type="text", placeholder="Place your input"),
-        dbc.Label("Loan Type"),
+        dbc.Label("collections_12_mths_ex_med"),
         dcc.Input(id="input5", type="text", placeholder="Place your input"),
-        dbc.Label("Loan Type"),
+        dbc.Label("delinq_2yrs"),
         dcc.Input(id="input6", type="text", placeholder="Place your input"),
-        dbc.Label("Loan Type"),
+        dbc.Label("delinq_amnt"),
         dcc.Input(id="input7", type="text", placeholder="Place your input"),
-        dbc.Label("Loan Type"),
+        dbc.Label("il_util"),
         dcc.Input(id="input8", type="text", placeholder="Place your input"),
-        dbc.Label("Loan Type"),
+        dbc.Label("mths_since_recent_bc"),
         dcc.Input(id="input9", type="text", placeholder="Place your input"),
-        dbc.Label("Loan Type"),
+        dbc.Label("mths_since_recent_inq"),
         dcc.Input(id="input10", type="text", placeholder="Place your input"),
-        dbc.Label("Loan Type"),
+        dbc.Label("num_accts_ever_120_pd"),
         dcc.Input(id="input11", type="text", placeholder="Place your input"),
         html.Div(id="out_table"),  dbc.Button("Submit", id="submit_btn", color="primary"),]
 )
@@ -74,7 +74,7 @@ layout = html.Div([
 ])
 
 @app.callback(
-    Output("out_table", "children"),
+    Output(out_table, "children"),
     Input("input1", "value"),
     Input("input2", "value"),
     Input("input3", "value"),
