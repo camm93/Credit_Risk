@@ -11,6 +11,7 @@ app.title = "Credit Risk Estimator"
 
 server = app.server
 
+app.config.suppress_callback_exceptions=True
 
 #navbar = dbc.NavbarSimple([
 #        dbc.NavItem(dbc.NavLink(page['name'], href=page['path']))
@@ -29,13 +30,13 @@ def dashboard_menu():
             html.H5("Dashboard"),
             dbc.Button("Overview", color="Light", className="menu-btns", href="/overview"),
             dbc.Button("Your Scorecard", color="Light", className="menu-btns", href="/scorecard"),
-            dbc.Button("History - Stats", color="Light", className="menu-btns"),
+            dbc.Button("History - Stats", color="Light", className="menu-btns", href="/stats"),
             dbc.Button("About", color="Light", className="menu-btns", href="/about"),
         ],
         className="d-grid gap-2",
     )
 
-
+'''
 def info_cards():
     cards = [
         dbc.Card(
@@ -64,7 +65,7 @@ def info_cards():
     return dbc.Row(
         id="upper-stats",
         children=[dbc.Col(card) for card in cards]
-    )
+    )'''
 
 
 def lower_stats():
@@ -135,7 +136,7 @@ app.layout = html.Div(
                 # Right column
                 dbc.Col(
                     [
-                    info_cards(),
+                    #info_cards(),
                     dl.plugins.page_container,
                     html.Hr(),
                     lower_stats()],

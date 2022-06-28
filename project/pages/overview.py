@@ -1,7 +1,7 @@
 import dash_bootstrap_components as dbc
 from dash import dcc, html, Input, Output, callback
 from dash_labs.plugins.pages import register_page
-from app.functions import get_user_stats, loan_balance, plot_regression
+from services.functions import get_user_stats, loan_balance, plot_regression
 
 
 register_page(__name__, path='/overview')

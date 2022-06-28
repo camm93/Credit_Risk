@@ -1,0 +1,70 @@
+from enum import Enum
+
+
+class CategoricalFeature(Enum):
+    APPLICATION_TYPE = 'Individual application or a joint application with two co-borrowers'
+    GRADE = 'Assigned loan grade'
+    HOME_OWNERSHIP = 'Home ownership status'
+    LOAN_STATUS = 'Loan Status'
+    PURPOSE = 'Loan purpose'
+    TERM = 'Number of payments on the loan in months'
+    VERIFICATION_STATUS = 'Income verification status'
+
+
+class NumericalFeature(Enum):
+    ANNUAL_INC = 'Self-reported annual income'
+    BC_OPEN_TO_BUY = 'Total open to buy on revolving bankcards'
+    DELINQ_AMNT = 'Past-due amount owed for the accounts on which the borrower is now delinquent.'
+    DTI = 'Debt-to-Income ratio'
+    EMP_LENGTH = 'Employment length in years'
+    INDEX = 'Index'
+    INQ_LAST_6MTHS = 'Number of credit inquiries in past 6 months'
+    INSTALLMENT = 'Installment - monthly payment'
+    INT_RATE = 'Interest rate on the loan'
+    LAST_FICO = 'Last FICO score'
+    LOAN_AMNT = 'Loan amount'
+    MAX_BAL_BC = 'Maximum current balance owed on all revolving accounts'
+    MO_SIN_OLD_REV_TL_OP = 'Months since oldest revolving account opened'
+    MORT_ACC = 'Number of mortgage accounts'
+    PCT_TL_NVR_DLQ = 'Percent of trades never delinquent'
+    PERCENT_BC_GT_75 = 'Percentage of all bankcard accounts > 75% of limit'
+    REVOL_UTIL = 'Revolving line utilization rate'
+    TOT_CUR_BAL = 'Total current balance of all accounts'
+    TOT_HI_CRED_LIM = 'Total high credit/credit limit'
+    TOTAL_ACC = 'Total number of credit lines currently in the borrower\'s credit file'
+
+
+class AllFeature(Enum):
+    ANNUAL_INC = 'Self-reported annual income'
+    APPLICATION_TYPE = 'Individual application or a joint application with two co-borrowers'
+    BC_OPEN_TO_BUY = 'Total open to buy on revolving bankcards'
+    DELINQ_AMNT = 'Past-due amount owed for the accounts on which the borrower is now delinquent.'
+    DTI = 'Debt-to-Income ratio'
+    EMP_LENGTH = 'Employment length in years'
+    GRADE = 'Assigned loan grade'
+    HOME_OWNERSHIP = 'Home ownership status'
+    INDEX = 'Index'
+    INQ_LAST_6MTHS = 'Number of credit inquiries in past 6 months'
+    INSTALLMENT = 'Installment - monthly payment'
+    INT_RATE = 'Interest rate on the loan'
+    LAST_FICO = 'Last FICO score'
+    LOAN_AMNT = 'Loan amount'
+    LOAN_STATUS = 'Loan Status'
+    MAX_BAL_BC = 'Maximum current balance owed on all revolving accounts'
+    MO_SIN_OLD_REV_TL_OP = 'Months since oldest revolving account opened'
+    MORT_ACC = 'Number of mortgage accounts'
+    PCT_TL_NVR_DLQ = 'Percent of trades never delinquent'
+    PERCENT_BC_GT_75 = 'Percentage of all bankcard accounts > 75% of limit'
+    PURPOSE = 'Loan purpose'
+    REVOL_UTIL = 'Revolving line utilization rate'
+    TERM = 'Number of payments on the loan in months'
+    TOT_CUR_BAL = 'Total current balance of all accounts'
+    TOT_HI_CRED_LIM = 'Total high credit/credit limit'
+    TOTAL_ACC = 'Total number of credit lines currently in the borrower\'s credit file'
+    VERIFICATION_STATUS = 'Income verification status'
+
+
+class PredictiveModel(Enum):
+    LOGISTIC_REGRESSION = 'Logistic Regression'
+    NEURAL_NETWORK = 'Neural Network'
+    RANDOM_FOREST = 'Random Forest'

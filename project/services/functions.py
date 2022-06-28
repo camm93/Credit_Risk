@@ -1,6 +1,12 @@
+from typing import Union
+from matplotlib.figure import Figure
 import numpy as np
+import pandas as pd
 import plotly.graph_objects as go
 from sklearn import linear_model
+from enums import CategoricalFeature
+from plots import create_boxplot, create_histogram, create_heatmap
+
 
 _data_size = np.random.randint(200, 600)
 
@@ -102,3 +108,16 @@ def loan_balance():
         "remaining_debt": 15000, 
         "original_loan": 20000, 
     }
+
+def contigency_table(index: pd.Series, column: pd.Series, normalize: Union[bool, str]=False):
+    return pd.crosstab(index=index, columns=column, normalize=normalize).round(3)
+
+def plot_stat_one(df: pd.DataFrame, x: str, is_num: bool=False) -> Figure:
+    return create_histogram(df, x, is_num)
+
+def plot_stat_two(df: pd.DataFrame, y: str, normalize: Union[bool, str]=False) -> Figure:
+    c_table = contigency_table(df[CategoricalFeature.LOAN_STATUS.name.lower()], df[y], normalize)
+    return create_heatmap(c_table)
+
+def plot_stat_three(df: pd.DataFrame, y: str) -> Figure:
+    return create_boxplot(df, y)
