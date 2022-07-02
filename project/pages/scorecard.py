@@ -29,19 +29,20 @@ def input_form():
 
 
 inputs =dbc.Form(children=[
-        dbc.Label("Fico Score"),
-        dcc.Input(id="input1", type="text", placeholder="Place your input"),
+        dbc.Label("Fico Score "),
+        dcc.Input(id="last_fico", type="text", placeholder="Input your Fico score"),
         html.Br(),
-        dbc.Label("interest rates"),
-        dcc.Input(id="input2", type="text", placeholder="Place your input"),
+        dbc.Label("Interest rate "),
+        dcc.Input(id="int_rate", type="text", placeholder="Input your interest rate"),
         html.Br(),
-        dbc.Label("DTI"),
-        dcc.Input(id="input3", type="text", placeholder="Place your input"),
+        dbc.Label("Annual income "),
+        dcc.Input(id="annual_inc", type="text", placeholder="Input your annual income"),
         html.Br(),
-        dbc.Label("Installment"),
-        dcc.Input(id="input4", type="text", placeholder="Place your input"),
+        dbc.Label("Loan amount "),
+        dcc.Input(id="loan_amnt", type="text", placeholder="Input your loan ammount"),
         html.Br(),
-        dbc.Label("max_bal_bc"),
+        html.Div(id="out_table"),  dbc.Button("Submit", id="submit_btn", color="primary"),])
+"""    dbc.Label("dti"),
         dcc.Input(id="input5", type="text", placeholder="Place your input"),
         html.Br(),
         dbc.Label("mo_sin_old_rev_tl_op"),
@@ -56,15 +57,8 @@ inputs =dbc.Form(children=[
         dbc.Label("tot_hi_cred_lim"),
         dcc.Input(id="input9", type="text", placeholder="Place your input"),
         html.Br(),
-        dbc.Label("bc_open_to_buy"),
-        dcc.Input(id="input10", type="text", placeholder="Place your input"),
-        html.Br(),
-        dbc.Label("loan_amnt"),
-        dcc.Input(id="input11", type="text", placeholder="Place your input"),
-        html.Div(id="out_table"),  dbc.Button("Submit", id="submit_btn", color="primary"),]
-)
-
-"""data_table = html.Div(children=[
+        
+        data_table = html.Div(children=[
         clean_data = html.Div([dbc.Button("Clear information", id="clean_data", color="secondary")])
         table_rows = [html.Tr([html.Td(k), html.Td(v)]) for k, v in out_table.items()]
         table_body = [html.Tbody(table_rows)]
@@ -72,10 +66,11 @@ inputs =dbc.Form(children=[
                 [html.H5("Data"),
                 dbc.Table(table_body, bordered=True, hover=True),
                 clean_data]
-        )],id="jose")"""
+        )],id="out_table"))"""
+query="Yes"
 out_table={}
 data_table = html.Div(children=[
-        html.Thead(children=[html.Tr([html.Th("Variable"), html.Th("Value")])]),
+        html.Thead(children=[html.Tr([html.Th("Variable "), html.Th("Values")])]),
         html.Tbody(children=[html.Tr([html.Td(k), html.Td(v)]) for k, v in out_table.items()]),
         html.Div(id="out_table")
 
@@ -91,19 +86,16 @@ layout = html.Div([
 
 @callback(
     Output("out_table", "children"),
-    Input("input1", "value"),
-    Input("input2", "value"),
-    Input("input3", "value"),
-    Input("input4", "value"),
-    Input("input5", "value"),
-    Input("input6", "value"),
-    Input("input7", "value"),
-    Input("input8", "value"),
-    Input("input9", "value"),
-    Input("input10", "value"),
-    Input("input11", "value"),
+    Input("last_fico", "value"),
+    Input("int_rate", "value"),
+    Input("annual_inc", "value"),
+    Input("loan_amnt", "value"),
+    #Input("input6", "value"),
+    #Input("input7", "value"),
+    #Input("input8", "value"),
+    #Input("input9", "value"),
 )
 
-def update_output(input1, input2, input3, input4, input5, input6, input7, input8, input9, input10, input11):
-    return u'Input 1 {} and Input 2 {} and Input 3 {} and Input 4 {} and Input 5 {} and Input 6 {} and Input 7 {} and Input 8 {} and Input 9 {} and Input 10 {} and Input 11 {}'.format(input1, input2, input3, input4, input5, input6, input7, input8, input9, input10, input11)
+def update_output(last_fico, int_rate, annual_inc, loan_amnt):
+    return html.Div(u'Fico score {} Interest rate {} Annual income {} Loan ammount {} Is the user expected to pay on time? {}'.format(last_fico, int_rate, annual_inc, loan_amnt, query))
 

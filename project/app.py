@@ -29,7 +29,6 @@ def dashboard_menu():
             html.H5("Dashboard"),
             dbc.Button("Overview", color="Light", className="menu-btns", href="/overview"),
             dbc.Button("Your Scorecard", color="Light", className="menu-btns", href="/scorecard"),
-            dbc.Button("History - Stats", color="Light", className="menu-btns"),
             dbc.Button("About", color="Light", className="menu-btns", href="/about"),
         ],
         className="d-grid gap-2",
