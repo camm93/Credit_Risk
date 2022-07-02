@@ -62,9 +62,3 @@ class AllFeature(Enum):
     TOT_HI_CRED_LIM = 'Total high credit/credit limit'
     TOTAL_ACC = 'Total number of credit lines currently in the borrower\'s credit file'
     VERIFICATION_STATUS = 'Income verification status'
-
-
-class PredictiveModel(Enum):
-    LOGISTIC_REGRESSION = 'Logistic Regression'
-    NEURAL_NETWORK = 'Neural Network'
-    RANDOM_FOREST = 'Random Forest'

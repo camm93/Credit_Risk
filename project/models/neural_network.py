@@ -1,9 +1,9 @@
 #from tensorflow.keras import models
 
-from predictive_model import PredictiveModel
+from models.predictive_model import PredictiveModel
 
 
-class LogisticRegression(PredictiveModel):
+class NeuralNetwork(PredictiveModel):
 
     def __init__(self, filename: str):
         super().__init__(filename)
@@ -19,7 +19,7 @@ class LogisticRegression(PredictiveModel):
         self._prepare_output(prediction)
 
     def _load_model(self):
-        self._model = models.load_model(self.filename)
+        self._model = 'jpña' #models.load_model(self.filename)
 
     def _prepare_input():
         pass

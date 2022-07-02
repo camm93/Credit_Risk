@@ -1,11 +1,10 @@
 import joblib
-from predictive_model import PredictiveModel
+from models.predictive_model import PredictiveModel
 
 
 class RandomForest(PredictiveModel):
 
-    def __init__(self, filename: str):
-        super().__init__(filename)
+    MODEL_FILENAME = ''
 
     @property
     def model(self):
@@ -15,10 +14,10 @@ class RandomForest(PredictiveModel):
         pass
 
     def _load_model(self):
-        model = open(self.filename, 'rb')
-        self._model = joblib.load(model)
+        self._model = joblib.load(self.MODEL_FILENAME)
 
-    def _prepare_input():
+    @staticmethod
+    def _prepare_input(form_data: list) -> list:
         pass
 
     def _prepare_output():

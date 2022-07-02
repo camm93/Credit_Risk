@@ -1,6 +1,4 @@
-
-
-from predictive_model import PredictiveModel
+from models.predictive_model import PredictiveModel
 
 
 class LogisticRegression(PredictiveModel):

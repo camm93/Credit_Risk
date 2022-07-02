@@ -12,7 +12,8 @@ def create_boxplot(df: pd.DataFrame, y: str=None, color: str=CategoricalFeature.
     return fig
 
 def create_heatmap(data: pd.DataFrame):
-    fig = px.imshow(data, text_auto=True,
+    feature = data.columns.name
+    fig = px.imshow(data, text_auto=True, title=f'Loan status fraction per {feature}'.title(),
                     labels={
                         CategoricalFeature.LOAN_STATUS.name.lower(): 'Loan Status'
                     })

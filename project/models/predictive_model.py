@@ -3,8 +3,10 @@ from abc import ABC, abstractmethod
 
 class PredictiveModel(ABC):
 
-    def __init__(self, filename: str):
-        self.filename = filename
+    MODEL_FILENAME = ''
+
+    def __init__(self):
+        self._load_model()
 
     @abstractmethod
     def predict(self) -> None:

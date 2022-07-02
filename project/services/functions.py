@@ -4,7 +4,10 @@ import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 from sklearn import linear_model
+
 from enums import CategoricalFeature
+from models import LogisticRegression, NeuralNetwork, RandomForest
+from models.enums import PredictionModel
 from plots import create_boxplot, create_histogram, create_heatmap
 
 
@@ -121,3 +124,12 @@ def plot_stat_two(df: pd.DataFrame, y: str, normalize: Union[bool, str]=False) -
 
 def plot_stat_three(df: pd.DataFrame, y: str) -> Figure:
     return create_boxplot(df, y)
+
+def get_prediction_model(model_name: str):
+    models = {
+        PredictionModel.LOGISTIC_REGRESSION.value: LogisticRegression,
+        PredictionModel.NEURAL_NETWORK.value: NeuralNetwork,
+        PredictionModel.RANDOM_FOREST.value: RandomForest,
+    }
+    class_instance = models.get(model_name, RandomForest)
+    return class_instance
