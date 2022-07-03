@@ -1,12 +1,11 @@
-import dash
 from enum import Enum
-from dash import dcc, html, Input, Output, callback
+from dash import dcc, html, Input, Output, State, callback
 import dash_bootstrap_components as dbc
 from dash_labs.plugins.pages import register_page
-from numpy import place
-from enums import AllFeature, CategoricalFeature, NumericalFeature
-from models.enums import LoanGrade, LoanPurpose, LoanTerm
-from services.functions import get_prediction_model
+
+from enums import CategoricalFeature, NumericalFeature
+from models.enums import LoanRiskGrade, LoanPurpose, LoanTerm, PredictionModel
+from services.functions import get_prediction_model, map_form_to_one_hot_encoding
 from services.utils import feature_equivalence, model_list
 
 
@@ -17,38 +16,40 @@ ALLOWED_TYPES = (
     "tel", "url", "range", "hidden",
 )
 
+predictive_model = get_prediction_model(PredictionModel.RANDOM_FOREST.value)
+
 def get_model_dropdown():
     return dcc.Dropdown(
         options=model_list(),
         id='dropdown-model',
-        placeholder="Select a predictive model"
+        placeholder="Select a predictive model",
+        value=model_list()[0],
     )
 
-def prediction_result():
+def predictive_models():
     return html.Div(
         id='model-div',
         children=[
             get_model_dropdown(),
-            html.P(id='predictive-model'),
-        ]
+        ],
     )
 
 form_features = [
+    NumericalFeature.INT_RATE,
+    NumericalFeature.ANNUAL_INC,
+    NumericalFeature.LOAN_AMNT,
+    NumericalFeature.DTI,
+    NumericalFeature.INQ_LAST_6MTHS,
     CategoricalFeature.GRADE,
     CategoricalFeature.PURPOSE,
     CategoricalFeature.TERM,
-    NumericalFeature.ANNUAL_INC,
-    NumericalFeature.DTI,
-    NumericalFeature.INQ_LAST_6MTHS,
-    NumericalFeature.INT_RATE,
-    NumericalFeature.LOAN_AMNT,
 ]
 
 def return_dcc_type(feature: Enum, i: int, type: str="number"):
     if isinstance(feature, NumericalFeature):
-        return dcc.Input(id="input" + str(i), type=type),
+        return dcc.Input(id="input" + str(i), type=type, min=0),
     category = {
-        CategoricalFeature.GRADE: LoanGrade,
+        CategoricalFeature.GRADE: LoanRiskGrade,
         CategoricalFeature.PURPOSE: LoanPurpose,
         CategoricalFeature.TERM: LoanTerm,
     }
@@ -62,38 +63,37 @@ inputs = dbc.Form(
             ]) for i, feature in enumerate(form_features, start=1)]
 )
 
-out_table={}
-data_table = html.Div(children=[
-        html.Thead(children=[html.Tr([html.Th("Variable"), html.Th("Value")])]),
-        html.Tbody(children=[html.Tr([html.Td(k), html.Td(v)]) for k, v in out_table.items()]),
-        html.Div(id="out_table")
-])
-
 
 layout = html.Div([
     html.H1('Score Page'),
-    prediction_result(),
+    predictive_models(),
+    html.Br(),
     inputs,
-    html.Div(id="out_table"),  dbc.Button("Submit", id="submit_btn", color="primary"),
-    data_table,
+    html.Br(),
+    dbc.Button("Submit", id="submit_btn", color="primary", className="d-grid gap-2 col-2 mx-auto"),
+    html.Br(),
+    dbc.Button(id="output-predicion", color="success", className="d-grid gap-4 col-4 mx-auto", disabled=True),
+    html.Br(),
+    dbc.Button(id="output-status", color="success", className="d-grid gap-4 col-4 mx-auto", disabled=True),
 ])
 
 
 @callback(
-    Output('predictive-model', 'children'),
-    Input('dropdown-model', 'value')
-)
-def update_result(val: str):
-    prediction_model = get_prediction_model(val)
-    print(prediction_model)
-    return val
-
-
-@callback(
-    Output("out_table", "children"),
-    [Input("input" + str(i), "value") for i in range(1, len(form_features) + 1)]
+    [Output("output-predicion", "children"),
+    Output("output-status", "children"),],
+    [State("input" + str(i), "value") for i in range(1, len(form_features) + 1)],
+    [State("dropdown-model", "data"),
+    Input("submit_btn", "n_clicks")]
 )
 def update_output(*inputs):
-    # model.predit(inputs)
-    print(list(inputs))
-    return
+    encoded_input = map_form_to_one_hot_encoding(inputs[:-2], form_features)
+    if None in encoded_input:
+        return "All fields are mandatory. Please, fill in the form!", "Incomplete Form"
+
+    print(list(encoded_input.values()))
+    # predictive_model = get_prediction_model(inputs[-2])
+    score, status = predictive_model.predict(list(encoded_input.values())) 
+    #predictive_model = json.loads(inputs[-2])
+    #print(predictive_model)
+    #model.predit(inputs)
+    return score, status

@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-file_name = 'BD_Modelos.feather'
+file_name = 'BD_loan.feather'
 df = pd.read_feather(file_name)
 print(df.columns)
 # print(df.shape)  # (1176120, 27) 

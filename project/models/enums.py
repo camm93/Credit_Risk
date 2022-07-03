@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class LoanGrade(Enum):
+class LoanRiskGrade(Enum):
     A = 'Grade A - Lowest'
     B = 'Grade B'
     C = 'Grade C'
@@ -27,12 +27,15 @@ class LoanPurpose(Enum):
     WEDDING = 'Wedding'
 
 
+class LoanStatus(Enum):
+    CHARGED_OFF = 0
+    FULLY_PAID = 1
+
+
 class LoanTerm(Enum):
     _36_MONTHS = '36-month term'
     _60_MONTHS = '60-month term'
 
 
 class PredictionModel(Enum):
-    LOGISTIC_REGRESSION = 'Logistic Regression'
-    NEURAL_NETWORK = 'Neural Network'
     RANDOM_FOREST = 'Random Forest'

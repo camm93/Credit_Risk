@@ -1,14 +1,16 @@
-from typing import Union
+from enum import Enum
+from typing import Dict, List, Tuple, Union
 from matplotlib.figure import Figure
 import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 from sklearn import linear_model
 
-from enums import CategoricalFeature
-from models import LogisticRegression, NeuralNetwork, RandomForest
-from models.enums import PredictionModel
+from enums import CategoricalFeature, NumericalFeature
+from models import RandomForest
+from models.enums import LoanRiskGrade, LoanPurpose, LoanTerm, PredictionModel
 from plots import create_boxplot, create_histogram, create_heatmap
+from services.utils import feature_list
 
 
 _data_size = np.random.randint(200, 600)
@@ -127,9 +129,30 @@ def plot_stat_three(df: pd.DataFrame, y: str) -> Figure:
 
 def get_prediction_model(model_name: str):
     models = {
-        PredictionModel.LOGISTIC_REGRESSION.value: LogisticRegression,
-        PredictionModel.NEURAL_NETWORK.value: NeuralNetwork,
         PredictionModel.RANDOM_FOREST.value: RandomForest,
     }
     class_instance = models.get(model_name, RandomForest)
-    return class_instance
+    return class_instance()
+
+def map_form_to_one_hot_encoding(inputs: Tuple, form_features: List[Enum]) -> Dict:
+    encoded_input = {}
+    #print("len inputs", len(inputs))
+    for i in range(len(inputs)):
+        encoded_feature_input = map_feature_to_one_hot_encoding(inputs[i], form_features[i])
+        #print(i, encoded_feature_input)
+        encoded_input.update(encoded_feature_input)
+    return encoded_input
+
+def map_feature_to_one_hot_encoding(input: Union[int, str], feature: Enum) -> list:
+    if isinstance(feature, NumericalFeature):
+        return {feature.name: input}
+
+    category = {
+        CategoricalFeature.GRADE: LoanRiskGrade,
+        CategoricalFeature.PURPOSE: LoanPurpose,
+        CategoricalFeature.TERM: LoanTerm,
+    }
+    orig_features, _ = feature_list(category.get(feature))
+    encoded_feature = dict.fromkeys(orig_features, 0)
+    encoded_feature[input] = 1
+    return encoded_feature

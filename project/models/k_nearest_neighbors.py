@@ -1,9 +1,7 @@
-#from tensorflow.keras import models
-
 from models.predictive_model import PredictiveModel
 
 
-class NeuralNetwork(PredictiveModel):
+class KNearestNeighbors(PredictiveModel):
 
     def __init__(self, filename: str):
         super().__init__(filename)
