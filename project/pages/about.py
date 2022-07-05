@@ -1,11 +1,13 @@
-import dash
-from dash import html, dcc, callback, Input, Output
+from dash import html
 from dash_labs.plugins.pages import register_page
+
 
 register_page(__name__, path="/about")
 
 layout = html.Div(children=[
     html.H1("About Credit Risk."),
+    html.Br(),
+    html.A("GitHub Repository", href="https://github.com/DanielDi/Credit_Risk"),
     html.Br(),
     html.P("This is a dashboard for the Credit Risk Estimator."),
     html.P("This dashboard is built with Dash and Dash-Labs."),

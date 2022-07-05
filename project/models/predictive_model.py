@@ -19,7 +19,3 @@ class PredictiveModel(ABC):
     @abstractmethod
     def _prepare_input():
         pass
-
-    @abstractmethod
-    def _prepare_output():
-        pass
