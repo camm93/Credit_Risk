@@ -8,9 +8,11 @@ matplotlib
 pyarrow
 
 # Application
+boto3
 dash==2.4.1
 dash-bootstrap-components==1.1.0
 dash-core-components==2.0.0
 dash-html-components==2.0.0
 dash-labs==1.1.0
 gunicorn==20.1.0
+python-dotenv
