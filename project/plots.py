@@ -20,8 +20,7 @@ def create_heatmap(data: pd.DataFrame):
     return fig
 
 def create_histogram(df: pd.DataFrame, x: str, is_num: bool):
-    range_x = list(df[x].quantile([0.01, 0.99]).values) if is_num else None
-    fig = px.histogram(df, x=x, color=CategoricalFeature.LOAN_STATUS.name.lower(), range_x=range_x,
+    fig = px.histogram(df, x=x, color=CategoricalFeature.LOAN_STATUS.name.lower(), #range_x=range_x,
                        labels={
                            CategoricalFeature.LOAN_STATUS.name.lower(): 'Loan Status'
                         })

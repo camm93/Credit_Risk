@@ -1,13 +1,11 @@
 from enum import Enum
+import numpy as np
 import pandas as pd
-from models.enums import LoanRiskGrade, PredictionModel
+from models.enums import PredictionModel
 
 
 def feature_list(enum: Enum) -> tuple[list, list]:
     readable_features = [feature.value for feature in enum]
-    if enum is LoanRiskGrade:
-        orig_features = [feature.name for feature in enum]
-        return orig_features, readable_features
     orig_features = [feature.name.lower() for feature in enum]
     return orig_features, readable_features
 
@@ -20,4 +18,13 @@ def model_list() -> list:
 
 def read_feather_db(file_name: str='mini_db.feather') -> pd.DataFrame:
     df = pd.read_feather(file_name)
-    return df
+    df = df.drop(columns=['index'], axis=1)
+    clipped_df = remove_extreme_outliers(df)
+    return clipped_df
+
+def remove_extreme_outliers(df: pd.DataFrame, quantiles: tuple=(0.01, 0.99)) -> pd.DataFrame:
+    cols = df.select_dtypes(np.number).columns
+    thresh = df[cols].quantile(quantiles)
+    clipped_df = df.copy()
+    clipped_df[cols] = df[cols].clip(lower=thresh.iloc[0], upper=thresh.iloc[1], axis=1)
+    return clipped_df
