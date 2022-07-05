@@ -1,16 +1,6 @@
 from enum import Enum
 
 
-class LoanRiskGrade(Enum):
-    A = 'Grade A - Lowest'
-    B = 'Grade B'
-    C = 'Grade C'
-    D = 'Grade D'
-    E = 'Grade E'
-    F = 'Grade F'
-    G = 'Grade G - Highest'
-
-
 class LoanPurpose(Enum):
     CAR = 'Car'
     CREDIT_CARD = 'Credit Card'

@@ -4,7 +4,7 @@ import dash_bootstrap_components as dbc
 from dash_labs.plugins.pages import register_page
 
 from enums import CategoricalFeature, NumericalFeature
-from models.enums import LoanRiskGrade, LoanPurpose, LoanTerm, PredictionModel
+from models.enums import LoanPurpose, LoanTerm, PredictionModel
 from services.functions import get_prediction_model, map_form_to_one_hot_encoding
 from services.utils import feature_equivalence, model_list
 
@@ -39,8 +39,8 @@ form_features = [
     NumericalFeature.ANNUAL_INC,
     NumericalFeature.LOAN_AMNT,
     NumericalFeature.DTI,
+    NumericalFeature.TOTAL_ACC,
     NumericalFeature.INQ_LAST_6MTHS,
-    CategoricalFeature.GRADE,
     CategoricalFeature.PURPOSE,
     CategoricalFeature.TERM,
 ]
@@ -49,7 +49,6 @@ def return_dcc_type(feature: Enum, i: int, type: str="number"):
     if isinstance(feature, NumericalFeature):
         return dcc.Input(id="input" + str(i), type=type, min=0),
     category = {
-        CategoricalFeature.GRADE: LoanRiskGrade,
         CategoricalFeature.PURPOSE: LoanPurpose,
         CategoricalFeature.TERM: LoanTerm,
     }
@@ -91,9 +90,5 @@ def update_output(*inputs):
         return "All fields are mandatory. Please, fill in the form!", "Incomplete Form"
 
     print(list(encoded_input.values()))
-    # predictive_model = get_prediction_model(inputs[-2])
     score, status = predictive_model.predict(list(encoded_input.values())) 
-    #predictive_model = json.loads(inputs[-2])
-    #print(predictive_model)
-    #model.predit(inputs)
     return score, status
