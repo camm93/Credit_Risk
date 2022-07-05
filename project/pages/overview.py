@@ -1,7 +1,7 @@
 import dash_bootstrap_components as dbc
-from dash import dcc, html, Input, Output, callback
+from dash import html
 from dash_labs.plugins.pages import register_page
-from services.functions import get_user_stats, loan_balance, plot_regression
+from services.functions import get_user_stats, loan_balance
 
 
 register_page(__name__, path='/overview')
@@ -19,32 +19,6 @@ def stats_table():
             )
 
 
-def middle_stats():
-    return dbc.Row(
-        id="middle-stats",
-        children=[
-            html.Div(
-                id="plot_container",
-                children=[
-                    dcc.Graph(id="regression_plot"),
-                    html.P(
-                        "Standard Deviation", style={"color": "white", "marginLeft": "20px"}
-                    ),
-                    dcc.Slider(
-                        id="std_slider",
-                        min=0,
-                        max=40,
-                        step=0.5,
-                        value=10,
-                        marks={i: str(i)
-                               for i in range(0, 40, 5)},
-                    ),
-                ]
-            ),
-        ]
-    )
-
-
 def bar_stats():
     credit_score, score_increase, remaining_debt, original_loan = loan_balance().values()
     return html.Div(
@@ -59,16 +33,6 @@ def bar_stats():
 
 
 layout = html.Div([
-    middle_stats(),
     bar_stats(),
     stats_table(),
 ])
-
-
-@callback(
-    Output(component_id="regression_plot", component_property="figure"),
-    [Input(component_id="std_slider", component_property="value")],
-)
-def update_regression_plot(std):
-    return plot_regression(std)
-

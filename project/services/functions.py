@@ -1,19 +1,14 @@
 from enum import Enum
 from typing import Dict, List, Tuple, Union
 from matplotlib.figure import Figure
-import numpy as np
 import pandas as pd
-import plotly.graph_objects as go
-from sklearn import linear_model
 
 from enums import CategoricalFeature, NumericalFeature
 from models import RandomForest
-from models.enums import LoanRiskGrade, LoanPurpose, LoanTerm, PredictionModel
+from models.enums import LoanPurpose, LoanTerm, PredictionModel
 from plots import create_boxplot, create_histogram, create_heatmap
 from services.utils import feature_list
 
-
-_data_size = np.random.randint(200, 600)
 
 fig_layout = {
     "plot_bgcolor": "black",
@@ -30,69 +25,6 @@ fig_layout = {
     "xaxis": {"color": "lightgray", "showgrid": False},
     "yaxis": {"color": "lightgray"},
 }
-
-
-def plot_regression(std=10):
-    _x_og = np.arange(0, _data_size)
-    x = _x_og.reshape((-1, 1))
-    y = _x_og * (
-        np.full(shape=_data_size, fill_value=1, dtype=np.int)
-        + np.random.normal(size=_data_size, loc=1, scale=std / 10)
-    )
-
-    model = linear_model.LinearRegression().fit(x, y)
-    r_sq = model.score(x, y)
-    preds = model.predict(x)
-
-    layout = go.Layout(
-        title=f"Regression fit R squared: {round(r_sq, 3)}",
-        height=700,
-    )
-    fig = go.Figure(layout=layout)
-
-    fig.add_trace(
-        go.Scatter(
-            x=_x_og,
-            y=y,
-            mode="markers",
-            name=f"x * (1 + rand_norm(mean=1, std={std}/10))",
-        )
-    )
-    fig.add_trace(go.Line(x=_x_og, y=preds, name="linear regression"))
-    fig.update_layout(fig_layout)
-
-    return fig
-
-
-def getStackedBar():
-    print()  
-    fig = go.Figure()
-
-    fig.add_trace(go.Bar(
-        y=[''],
-        x=[15],
-        name="Remaining",
-        orientation='h',
-        marker=dict(
-            color='#F44336',
-            line=dict(color='rgba(246, 78, 139, 1.0)', width=3)
-        ),
-    ))
-    fig.add_trace(go.Bar(
-        y=[''],
-        x=[20],
-        name="Paid",
-        orientation='h',
-        marker=dict(
-            color='rgba(58, 71, 80, 0.6)',
-            line=dict(color='rgba(58, 71, 80, 1.0)', width=3)
-        )
-    ))
-    fig.update_layout(
-        barmode="stack",
-    )
-    fig.update_traces(marker_line_width=0, hovertemplate="%{x}%")
-    return fig
 
 
 def get_user_stats():
@@ -122,6 +54,7 @@ def plot_stat_one(df: pd.DataFrame, x: str, is_num: bool=False) -> Figure:
 
 def plot_stat_two(df: pd.DataFrame, y: str, normalize: Union[bool, str]=False) -> Figure:
     c_table = contigency_table(df[CategoricalFeature.LOAN_STATUS.name.lower()], df[y], normalize)
+    print(c_table)
     return create_heatmap(c_table)
 
 def plot_stat_three(df: pd.DataFrame, y: str) -> Figure:
@@ -136,10 +69,8 @@ def get_prediction_model(model_name: str):
 
 def map_form_to_one_hot_encoding(inputs: Tuple, form_features: List[Enum]) -> Dict:
     encoded_input = {}
-    #print("len inputs", len(inputs))
     for i in range(len(inputs)):
         encoded_feature_input = map_feature_to_one_hot_encoding(inputs[i], form_features[i])
-        #print(i, encoded_feature_input)
         encoded_input.update(encoded_feature_input)
     return encoded_input
 
@@ -148,7 +79,6 @@ def map_feature_to_one_hot_encoding(input: Union[int, str], feature: Enum) -> li
         return {feature.name: input}
 
     category = {
-        CategoricalFeature.GRADE: LoanRiskGrade,
         CategoricalFeature.PURPOSE: LoanPurpose,
         CategoricalFeature.TERM: LoanTerm,
     }
