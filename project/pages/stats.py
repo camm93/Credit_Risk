@@ -13,8 +13,10 @@ PREDICTED_FEATURE = CategoricalFeature.LOAN_STATUS.name.lower()
 
 df = read_feather_db()
 
+
 def get_feature_dropdown():
     return dcc.Dropdown(options=feature_equivalence(AllFeature), value=feature_equivalence(AllFeature)[0]['value'], id='dropdown-feature')
+
 
 def upper_plot():
     return dbc.Row(

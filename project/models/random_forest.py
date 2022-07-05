@@ -30,7 +30,6 @@ class RandomForest(PredictiveModel):
         print('encoded_input2', encoded_input)
         print(score)
         encoded_input.insert(0, score)
-        encoded_input.insert(16, 3)
         validated_data = RandomForest._prepare_input(encoded_input)
         print('validated_data', validated_data)
         predicted_status = self.classification_model.predict(validated_data)
