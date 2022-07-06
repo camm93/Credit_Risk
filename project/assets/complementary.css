@@ -26,6 +26,22 @@ th {
     cursor: pointer;
     width: 20%;
 }
+.card-name {
+    font-weight: 200;
+}
+.card-email {
+    font-weight: 100;
+    font-style: italic;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.card-text {
+    font-weight: 500;
+    font-size: 4;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.card-row {
+    margin: 5px;
+}
 .describe-table {
     color: black;
     font-weight: 300;
