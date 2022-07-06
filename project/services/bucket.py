@@ -1,18 +1,20 @@
 import tempfile
 import boto3
+from dotenv import load_dotenv
 import joblib
 from sklearn.ensemble import RandomForestRegressor
 import os
 import pandas as pd
 
+load_dotenv()
+
 class Bucket():
     AWS_ID = os.getenv('AWS_ACCESS_KEY_ID')
     AWS_SECRET = os.getenv('AWS_SECRET_ACCESS_KEY')
+    BUCKET_NAME = os.getenv('BUCKET_NAME')
 
     S3_CLIENT = boto3.client('s3', aws_access_key_id=AWS_ID,
                      aws_secret_access_key=AWS_SECRET)
-
-    BUCKET_NAME = 'ds4a-credit-risk'
 
     @property
     def bucket(self):
