@@ -19,19 +19,13 @@ class RandomForest(PredictiveModel):
 
     def predict(self, encoded_input: list) -> Tuple[str, str]:
         validated_data = RandomForest._prepare_input(encoded_input)
-        print('validated_data1', validated_data)
         predicted_score = self.regression_model.predict(validated_data)
-        print('predicted_score', predicted_score)
-        score_output = RandomForest._prepare_output(predicted_score)
         loan_status = self._classify(predicted_score[0], encoded_input)
-        return score_output, loan_status
+        return predicted_score[0], loan_status
 
     def _classify(self, score: float, encoded_input: list) -> str:
-        print('encoded_input2', encoded_input)
-        print(score)
         encoded_input.insert(0, score)
         validated_data = RandomForest._prepare_input(encoded_input)
-        print('validated_data', validated_data)
         predicted_status = self.classification_model.predict(validated_data)
         status_output = RandomForest._prepare_classification_output(predicted_status)
         return status_output
@@ -53,7 +47,3 @@ class RandomForest(PredictiveModel):
     def _prepare_input(form_data: list) -> list:
         print("prepare_input", form_data)
         return [form_data]
-
-    @staticmethod
-    def _prepare_output(predicted_score) -> str:
-        return f"Your estimated score is: {predicted_score[0]:>.1f}"

@@ -21,7 +21,7 @@ def dashboard_menu():
         id="dashboard-menu",
         children=[
             html.H5("Dashboard"),
-            dbc.Button("Overview", color="Light", className="menu-btns", href="/overview"),
+            dbc.Button("Overview", color="Light", className="menu-btns", href="/"),
             dbc.Button("History - Stats", color="Light", className="menu-btns", href="/stats"),
             dbc.Button("Your Scorecard", color="Light", className="menu-btns", href="/scorecard"),
             dbc.Button("About", color="Light", className="menu-btns", href="/about"),

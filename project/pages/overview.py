@@ -4,7 +4,7 @@ from dash_labs.plugins.pages import register_page
 from services.functions import get_user_stats, loan_balance
 
 
-register_page(__name__, path='/overview')
+register_page(__name__, path="/", title="Credit-Risk")
 
 
 def stats_table():
