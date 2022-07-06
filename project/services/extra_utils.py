@@ -1,11 +1,7 @@
 import pandas as pd
 
-
 file_name = "BD_loan.feather"
 df = pd.read_feather(file_name)
-print(df.columns)
-# print(df.shape)  # (1176120, 27) 
-print(df.info())  # memory usage --> 242.3MB
 
 df_to_db = df.sample(n=20000, random_state=1)
 
