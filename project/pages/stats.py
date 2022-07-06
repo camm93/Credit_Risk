@@ -28,9 +28,27 @@ def upper_plot():
         ]
     )
 
+
+def describe_table(feature_description: dict):
+    cat_features, _ = feature_list(CategoricalFeature)
+    table_header = [html.Thead(html.Tr([html.Th("Statistic"), html.Th("Value")]))]
+    if feature_description.name in cat_features:
+        table_rows = [html.Tr([html.Td(k), html.Td(f"{v}")]) for k, v in feature_description.items()]
+    else:
+        table_rows = [html.Tr([html.Td(k), html.Td(f"{v:>.2f}")]) for k, v in feature_description.items()]
+    table_body = [html.Tbody(table_rows)]
+    return dbc.Table(children=table_header + table_body, bordered=True, hover=True, className="describe-table")
+
+
+def feature_table():
+    return html.Div(id="feature-description")
+
+
 layout = html.Div([
         html.H1("Stats Page"),
         upper_plot(),
+        html.H3("Summary Statistics"),
+        feature_table(),
 ])
 
 @callback(
@@ -53,3 +71,10 @@ def update_plot(y: str):
         return plot_stat_two(df[[y, PREDICTED_FEATURE]], y=y, normalize="columns")
     else:
         return plot_stat_three(df[[y, PREDICTED_FEATURE]], y=y)
+
+@callback(
+    Output(component_id="feature-description", component_property="children"),
+    Input(component_id="dropdown-feature", component_property="value")
+)
+def update_feature_description(x: str):
+    return describe_table(df[x].describe())
