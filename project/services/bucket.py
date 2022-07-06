@@ -3,6 +3,7 @@ import boto3
 import joblib
 from sklearn.ensemble import RandomForestRegressor
 import os
+import pandas as pd
 
 class Bucket():
     AWS_ID = os.getenv('AWS_ACCESS_KEY_ID')
@@ -30,5 +31,13 @@ class Bucket():
             clas_key = 'rf_loan_clas.joblib'
             self.S3_CLIENT.download_fileobj(Fileobj=fp, Bucket=self.BUCKET_NAME, Key=clas_key)
             fp.seek(0)
-            reg_model = joblib.load(fp)
-        return reg_model
+            clas_model = joblib.load(fp)
+        return clas_model
+
+    def _load_mini_db(self):
+        with tempfile.TemporaryFile() as fp:
+            clas_key = 'mini_db.feather'
+            self.S3_CLIENT.download_fileobj(Fileobj=fp, Bucket=self.BUCKET_NAME, Key=clas_key)
+            fp.seek(0)
+            mini_db = pd.read_feather(fp)
+        return mini_db

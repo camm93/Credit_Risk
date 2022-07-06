@@ -36,7 +36,6 @@ class RandomForest(PredictiveModel):
         self._clas_model = bucket._load_clas_model()
         # self._reg_model = joblib.load(self.REGRESSION_FILENAME)
         # self._clas_model = joblib.load(self.CLASSIFIER_FILENAME)
-        print("Se carga modelo entrenado.")
 
     @staticmethod
     def _prepare_classification_output(predicted_status) -> str:
@@ -45,5 +44,4 @@ class RandomForest(PredictiveModel):
 
     @staticmethod
     def _prepare_input(form_data: list) -> list:
-        print("prepare_input", form_data)
         return [form_data]

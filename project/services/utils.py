@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 from scipy.stats import percentileofscore
 from models.enums import PredictionModel
-
+from services.bucket import Bucket
 
 def calculate_percentile(value: float, series: pd.Series) -> float:
     return percentileofscore(series, value)
@@ -25,8 +25,9 @@ def peso_to_dollar(value: float) -> float:
         exchange_rate = 4100  # USD/COP
         return np.round(value/exchange_rate, 2)
 
-def read_feather_db(file_name: str="mini_db.feather") -> pd.DataFrame:
-    df = pd.read_feather(file_name)
+def read_feather_db() -> pd.DataFrame:
+    bucket = Bucket()
+    df = bucket._load_mini_db()
     df = df.drop(columns=["index"], axis=1)
     clipped_df = remove_extreme_outliers(df)
     return clipped_df
