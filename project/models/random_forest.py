@@ -2,7 +2,7 @@ import joblib
 from typing import Tuple
 from models.enums import LoanStatus
 from models.predictive_model import PredictiveModel
-
+from services.bucket import Bucket
 
 class RandomForest(PredictiveModel):
 
@@ -37,8 +37,11 @@ class RandomForest(PredictiveModel):
         return status_output
 
     def _load_model(self) -> None:
-        self._reg_model = joblib.load(self.REGRESSION_FILENAME)
-        self._clas_model = joblib.load(self.CLASSIFIER_FILENAME)
+        bucket = Bucket()
+        self._reg_model = bucket._load_reg_model()
+        self._clas_model = bucket._load_clas_model()
+        # self._reg_model = joblib.load(self.REGRESSION_FILENAME)
+        # self._clas_model = joblib.load(self.CLASSIFIER_FILENAME)
         print("Se carga modelo entrenado.")
 
     @staticmethod
