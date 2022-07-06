@@ -6,10 +6,10 @@ from dash_labs.plugins.pages import register_page
 from enums import CategoricalFeature, NumericalFeature
 from models.enums import LoanPurpose, LoanTerm, PredictionModel
 from services.functions import get_prediction_model, map_form_to_one_hot_encoding
-from services.utils import feature_equivalence, model_list
+from services.utils import calculate_percentile, feature_equivalence, model_list, peso_to_dollar, read_feather_db
 
 
-register_page(__name__, path='/scorecard')
+register_page(__name__, path="/scorecard")
 
 ALLOWED_TYPES = (
     "text", "number", "password", "email", "search",
@@ -18,17 +18,19 @@ ALLOWED_TYPES = (
 
 predictive_model = get_prediction_model(PredictionModel.RANDOM_FOREST.value)
 
+last_fico = read_feather_db()['last_fico']
+
 def get_model_dropdown():
     return dcc.Dropdown(
         options=model_list(),
-        id='dropdown-model',
+        id="dropdown-model",
         placeholder="Select a predictive model",
         value=model_list()[0],
     )
 
 def predictive_models():
     return html.Div(
-        id='model-div',
+        id="model-div",
         children=[
             get_model_dropdown(),
         ],
@@ -64,7 +66,7 @@ inputs = dbc.Form(
 
 
 layout = html.Div([
-    html.H1('Score Page'),
+    html.H1("Score Page"),
     predictive_models(),
     html.Br(),
     inputs,
@@ -85,10 +87,14 @@ layout = html.Div([
     Input("submit_btn", "n_clicks")]
 )
 def update_output(*inputs):
+    inputs = list(inputs)
+    inputs[1] = peso_to_dollar(inputs[1])
+    inputs[2] = peso_to_dollar(inputs[2])
     encoded_input = map_form_to_one_hot_encoding(inputs[:-2], form_features)
     if None in encoded_input:
         return "All fields are mandatory. Please, fill in the form!", "Incomplete Form"
 
-    print(list(encoded_input.values()))
-    score, status = predictive_model.predict(list(encoded_input.values())) 
-    return score, status
+    score, status = predictive_model.predict(list(encoded_input.values()))
+    percentile_population = (f"Your estimated score is: {score:>.1f}. \n"  
+                             f"It is over {calculate_percentile(score, last_fico):>.1f}% of our users.")
+    return percentile_population, status

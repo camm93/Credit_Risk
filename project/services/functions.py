@@ -54,7 +54,6 @@ def plot_stat_one(df: pd.DataFrame, x: str, is_num: bool=False) -> Figure:
 
 def plot_stat_two(df: pd.DataFrame, y: str, normalize: Union[bool, str]=False) -> Figure:
     c_table = contigency_table(df[CategoricalFeature.LOAN_STATUS.name.lower()], df[y], normalize)
-    print(c_table)
     return create_heatmap(c_table)
 
 def plot_stat_three(df: pd.DataFrame, y: str) -> Figure:
@@ -67,7 +66,7 @@ def get_prediction_model(model_name: str):
     class_instance = models.get(model_name, RandomForest)
     return class_instance()
 
-def map_form_to_one_hot_encoding(inputs: Tuple, form_features: List[Enum]) -> Dict:
+def map_form_to_one_hot_encoding(inputs: list, form_features: List[Enum]) -> Dict:
     encoded_input = {}
     for i in range(len(inputs)):
         encoded_feature_input = map_feature_to_one_hot_encoding(inputs[i], form_features[i])
