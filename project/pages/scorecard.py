@@ -113,7 +113,7 @@ def update_output(*inputs):
 
     score, status = predictive_model.predict(list(encoded_input.values()))
     percentile_population = (f"Your estimated score is: {score:>.1f}. \n"  
-                             f"It is over {calculate_percentile(score, last_fico):>.1f}% of our users.")
+                            f"It is over {calculate_percentile(score, last_fico):>.1f}% of our users.")
     return percentile_population, status
 
 @callback(

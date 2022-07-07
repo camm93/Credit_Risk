@@ -12,19 +12,19 @@ from services.utils import feature_list
 
 def get_user_stats():
     return {
-        "Successfully paid loans": 65,
-        "Outstanding loans": 15.7,
-        "Forgiven loans": 5.6,
-        "In progress": 2.1,
-        "Forfeit": 1.9,
-        "Other": 1.5
+        "Net Loan Portfolio in banking establishment": 533509840,
+        "Net Loan Portfolio in financing companies": 11802396,
+        "Gross portfolio growth": 3.9,
+        "Gross growth of past due portfolio": -18.6,
+        "Coverage": 163.2 ,
+        "Quality (ratio between overdue portfolio and gross portfolio)": 3.9
     }
 
 
 def loan_balance():
     return {
-        "credit_score": 700, 
-        "score_increase": 25, 
+        "Credit in Colombia March": 2022, 
+        "score_increase": 12, 
         "remaining_debt": 15000, 
         "original_loan": 20000, 
     }
