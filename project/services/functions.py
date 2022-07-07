@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Dict, List, Tuple, Union
+from typing import Dict, List, Union
 from matplotlib.figure import Figure
 import pandas as pd
 
@@ -8,23 +8,6 @@ from models import RandomForest
 from models.enums import LoanPurpose, LoanTerm, PredictionModel
 from plots import create_boxplot, create_histogram, create_heatmap
 from services.utils import feature_list
-
-
-fig_layout = {
-    "plot_bgcolor": "black",
-    "paper_bgcolor": "black",
-    "title": {"font": {"size": 20, "color": "white"}},
-    "legend": {
-        "font": {"size": 14, "color": "white"},
-        "orientation": "h",
-        "yanchor": "bottom",
-        "y": 1.02,
-        "xanchor": "right",
-        "x": 1,
-    },
-    "xaxis": {"color": "lightgray", "showgrid": False},
-    "yaxis": {"color": "lightgray"},
-}
 
 
 def get_user_stats():
