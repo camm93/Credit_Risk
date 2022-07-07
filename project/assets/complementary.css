@@ -49,6 +49,10 @@ th {
     text-align: justify;
 }
 
+#logo {
+    width: 16%;
+}
+
 #more_data_btn {
     border-radius: 0;
     cursor: pointer;

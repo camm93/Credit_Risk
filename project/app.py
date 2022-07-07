@@ -37,7 +37,7 @@ app.layout = html.Div(
         html.Div(
             id="banner",
             className="banner",
-            children=[html.Img(src=app.get_asset_url("plotly_logo.png"))],
+            children=[html.Img(id="logo", src=app.get_asset_url("credit_risk.png"))],
         ),
         dbc.Row(
             [dbc.Col(
