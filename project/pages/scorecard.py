@@ -16,9 +16,9 @@ ALLOWED_TYPES = (
     "tel", "url", "range", "hidden",
 )
 
-#predictive_model = get_prediction_model(PredictionModel.RANDOM_FOREST.value)
+predictive_model = get_prediction_model(PredictionModel.RANDOM_FOREST.value)
 
-#last_fico = read_feather_db()['last_fico']
+last_fico = read_feather_db()['last_fico']
 
 def get_model_dropdown():
     return dcc.Dropdown(
@@ -94,8 +94,7 @@ def update_output(*inputs):
     if None in encoded_input:
         return "All fields are mandatory. Please, fill in the form!", "Incomplete Form"
 
-    #score, status = predictive_model.predict(list(encoded_input.values()))
-    #percentile_population = (f"Your estimated score is: {score:>.1f}. \n"  
-    #                        f"It is over {calculate_percentile(score, last_fico):>.1f}% of our users.")
-    #return percentile_population, status
-    return 1,1    
+    score, status = predictive_model.predict(list(encoded_input.values()))
+    percentile_population = (f"Your estimated score is: {score:>.1f}. \n"  
+                            f"It is over {calculate_percentile(score, last_fico):>.1f}% of our users.")
+    return percentile_population, status
