@@ -11,7 +11,7 @@ register_page(__name__, path="/stats")
 
 PREDICTED_FEATURE = CategoricalFeature.LOAN_STATUS.name.lower()
 
-df = read_feather_db()
+#df = read_feather_db()
 
 
 def get_feature_dropdown():
@@ -51,20 +51,20 @@ layout = html.Div([
         feature_table(),
 ])
 
-@callback(
-    Output(component_id="hist-plot", component_property="figure"),
-    Input(component_id="dropdown-feature", component_property="value")
-)
+#@callback(
+#    Output(component_id="hist-plot", component_property="figure"),
+#    Input(component_id="dropdown-feature", component_property="value")
+#)
 def update_plot(x: str):
     cat_features, _ = feature_list(CategoricalFeature)
     if x in cat_features:
         return plot_stat_one(df[[x, PREDICTED_FEATURE]], x=x, is_num=False)
     return plot_stat_one(df[[x, PREDICTED_FEATURE]], x=x, is_num=True)
 
-@callback(
-    Output(component_id="box-plot", component_property="figure"),
-    Input(component_id="dropdown-feature", component_property="value")
-)
+#@callback(
+#    Output(component_id="box-plot", component_property="figure"),
+#    Input(component_id="dropdown-feature", component_property="value")
+#)
 def update_plot(y: str):
     cat_features, _ = feature_list(CategoricalFeature)
     if y in cat_features:
