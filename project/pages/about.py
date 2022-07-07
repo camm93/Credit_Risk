@@ -12,12 +12,13 @@ layout = html.Div(children=[
     html.Br(),
     html.P("This is a dashboard for the Credit Risk Estimator."),
     html.P("This dashboard is built with Dash and Dash-Labs."),
-    html.P("The data is provided by Lending Club. through a Kaggle challenge"),
+    html.P(children=["The data was provided in a Kaggle challenge and taken from ",
+                     html.A("Lending Club.", href="https://www.lendingclub.com/"), ]),
     html.Br(),
     html.H2("About the team"),
     html.Br(),
-    html.P(children=["This dashboard is built by the 67th team in Data Science 4 All Colombia.",
-    html.A(" Correlation One.", href="https://www.correlation-one.com/data-science-for-all-colombia")]),
+    html.P(children=["This dashboard is built by the 67th team in Data Science 4 All Colombia. ",
+                     html.A("Correlation One.", href="https://www.correlation-one.com/data-science-for-all-colombia")]),
     html.P("Team Members:"),
     html.Br(),
     html.Div(
@@ -69,7 +70,7 @@ layout = html.Div(children=[
                             ],
                             color="secondary",
                             outline=True,),
-                        )
+                    )
                 ],
                 className="card-row",
             ),
@@ -84,7 +85,7 @@ layout = html.Div(children=[
                                                 className="card-name"),
                                         html.H5("danieldi0102@gmail.com",
                                                 className="card-email"),
-                                        html.P("Some text",
+                                        html.P("Data Scientist, Developer.",
                                                className="card-text"),
                                         dbc.CardLink(
                                             "LinkedIn", href="https://www.linkedin.com/in/daniel-espinal/"),
@@ -121,7 +122,7 @@ layout = html.Div(children=[
                             ],
                             color="secondary",
                             outline=True,),
-                        )
+                    )
                 ],
                 className="card-row",
             ),
@@ -136,7 +137,7 @@ layout = html.Div(children=[
                                                 className="card-name"),
                                         html.H5("stevenrojas354@gmail.com",
                                                 className="card-email"),
-                                        html.P("Some text",
+                                        html.P("Data Scientist.",
                                                className="card-text"),
                                         dbc.CardLink(
                                             "LinkedIn", href="https://www.linkedin.com/in/steven-rojas-serrano-99259a206"),
@@ -147,9 +148,9 @@ layout = html.Div(children=[
                             ],
                             color="secondary",
                             outline=True,
-                        style={"width": "49.5%"},
+                            style={"width": "49.5%"},
                         )
-                        ),
+                    ),
                 ],
                 className="card-row",
             ),

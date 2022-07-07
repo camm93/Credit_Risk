@@ -20,6 +20,7 @@ predictive_model = get_prediction_model(PredictionModel.RANDOM_FOREST.value)
 
 last_fico = read_feather_db()['last_fico']
 
+
 def get_model_dropdown():
     return dcc.Dropdown(
         options=model_list(),
@@ -28,6 +29,7 @@ def get_model_dropdown():
         value=model_list()[0],
     )
 
+
 def predictive_models():
     return html.Div(
         id="model-div",
@@ -35,6 +37,7 @@ def predictive_models():
             get_model_dropdown(),
         ],
     )
+
 
 form_features = [
     NumericalFeature.INT_RATE,
@@ -58,6 +61,7 @@ feature_restrictions = [
     (None, None, None),
 ]
 
+
 def return_dcc_type(feature: Enum, i: int):
     if isinstance(feature, NumericalFeature):
         min_, max_, step_ = feature_restrictions[i-1]
@@ -68,12 +72,13 @@ def return_dcc_type(feature: Enum, i: int):
     }
     return dcc.Dropdown(id="input" + str(i), options=feature_equivalence(category.get(feature)), className="dropdown-type"),
 
+
 inputs = dbc.Form(
     children=[
         dbc.Row([
             dbc.Col(dbc.Label(feature.value)),
             dbc.Col(return_dcc_type(feature, i))
-            ]) for i, feature in enumerate(form_features, start=1)]
+        ]) for i, feature in enumerate(form_features, start=1)]
 )
 
 
@@ -87,20 +92,24 @@ layout = html.Div([
     ),
     inputs,
     html.Br(),
-    dbc.Button("Submit", id="submit_btn", color="primary", className="d-grid gap-2 col-2 mx-auto"),
+    dbc.Button("Submit", id="submit_btn", color="primary",
+               className="d-grid gap-2 col-2 mx-auto"),
     html.Br(),
-    dbc.Button(id="output-predicion", color="success", className="d-grid gap-4 col-4 mx-auto", disabled=True),
+    dbc.Button(id="output-predicion", color="success",
+               className="d-grid gap-4 col-4 mx-auto", disabled=True),
     html.Br(),
-    dbc.Button(id="output-status", color="success", className="d-grid gap-4 col-4 mx-auto", disabled=True),
+    dbc.Button(id="output-status", color="success",
+               className="d-grid gap-4 col-4 mx-auto", disabled=True),
 ])
 
 
 @callback(
     [Output("output-predicion", "children"),
-    Output("output-status", "children"),],
-    [State("input" + str(i), "value") for i in range(1, len(form_features) + 1)],
+     Output("output-status", "children")],
+    [State("input" + str(i), "value")
+     for i in range(1, len(form_features) + 1)],
     [State("dropdown-model", "data"),
-    Input("submit_btn", "n_clicks")]
+     Input("submit_btn", "n_clicks")]
 )
 def update_output(*inputs):
     inputs = list(inputs)
@@ -112,9 +121,10 @@ def update_output(*inputs):
         return "All fields are mandatory. Please, fill in the form!", "Incomplete Form"
 
     score, status = predictive_model.predict(list(encoded_input.values()))
-    percentile_population = (f"Your estimated score is: {score:>.1f}. \n"  
-                            f"It is over {calculate_percentile(score, last_fico):>.1f}% of our users.")
+    percentile_population = (f"Your estimated score is: {score:>.1f}. \n"
+                             f"It is over {calculate_percentile(score, last_fico):>.1f}% of our users.")
     return percentile_population, status
+
 
 @callback(
     [Output("loan-amount-alert", "displayed"),
@@ -123,7 +133,6 @@ def update_output(*inputs):
      Input("input3", "value")]
 )
 def validate_loan_amount(income: int, loan: int):
-    print(income, loan)
     if not income or not loan:
         return False, loan
     max_allowed_loan = 1.5 * income
