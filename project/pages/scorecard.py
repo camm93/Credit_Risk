@@ -47,14 +47,26 @@ form_features = [
     CategoricalFeature.TERM,
 ]
 
-def return_dcc_type(feature: Enum, i: int, type: str="number"):
+feature_restrictions = [
+    (6, 35, 0.1),  # min_, max_, step_
+    (0, 1e9, 1e5),
+    (0, 1e9, 1e5),
+    (0, 40, 0.5),
+    (0, 40, 1),
+    (0, 5, 1),
+    (None, None, None),
+    (None, None, None),
+]
+
+def return_dcc_type(feature: Enum, i: int):
     if isinstance(feature, NumericalFeature):
-        return dcc.Input(id="input" + str(i), type=type, min=0),
+        min_, max_, step_ = feature_restrictions[i-1]
+        return dcc.Input(id="input" + str(i), min=min_, max=max_, step=step_, type="number", className="input-type", debounce=True),
     category = {
         CategoricalFeature.PURPOSE: LoanPurpose,
         CategoricalFeature.TERM: LoanTerm,
     }
-    return dcc.Dropdown(id="input" + str(i), options=feature_equivalence(category.get(feature))),
+    return dcc.Dropdown(id="input" + str(i), options=feature_equivalence(category.get(feature)), className="dropdown-type"),
 
 inputs = dbc.Form(
     children=[
@@ -69,6 +81,10 @@ layout = html.Div([
     html.H1("Score Page"),
     predictive_models(),
     html.Br(),
+    dcc.ConfirmDialog(
+        id="loan-amount-alert",
+        message=f"This loan amount exceeds your debt capacity! Replacing entered value with maximum allowed amount.",
+    ),
     inputs,
     html.Br(),
     dbc.Button("Submit", id="submit_btn", color="primary", className="d-grid gap-2 col-2 mx-auto"),
@@ -90,6 +106,7 @@ def update_output(*inputs):
     inputs = list(inputs)
     inputs[1] = peso_to_dollar(inputs[1])
     inputs[2] = peso_to_dollar(inputs[2])
+
     encoded_input = map_form_to_one_hot_encoding(inputs[:-2], form_features)
     if None in encoded_input:
         return "All fields are mandatory. Please, fill in the form!", "Incomplete Form"
@@ -98,3 +115,18 @@ def update_output(*inputs):
     percentile_population = (f"Your estimated score is: {score:>.1f}. \n"  
                              f"It is over {calculate_percentile(score, last_fico):>.1f}% of our users.")
     return percentile_population, status
+
+@callback(
+    [Output("loan-amount-alert", "displayed"),
+     Output("input3", "value")],
+    [Input("input2", "value"),
+     Input("input3", "value")]
+)
+def validate_loan_amount(income: int, loan: int):
+    print(income, loan)
+    if not income or not loan:
+        return False, loan
+    max_allowed_loan = 1.5 * income
+    if loan <= max_allowed_loan:
+        return False, loan
+    return True, max_allowed_loan

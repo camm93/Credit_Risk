@@ -51,6 +51,15 @@ th {
     margin-right: auto;
     width: 50%;
 }
+.dropdown-type {
+    margin-left: 25%;
+    width: 50%;
+}
+.input-type {
+    margin-left: 25%;
+    text-align: right;
+    width: 50%;
+}
 .menu-btns {
     padding: 6px 0px;
     text-align: left;

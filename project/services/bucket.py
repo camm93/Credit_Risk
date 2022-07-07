@@ -2,7 +2,6 @@ import tempfile
 import boto3
 from dotenv import load_dotenv
 import joblib
-from sklearn.ensemble import RandomForestRegressor
 import os
 import pandas as pd
 
