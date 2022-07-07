@@ -15,10 +15,6 @@ class Bucket():
     S3_CLIENT = boto3.client('s3', aws_access_key_id=AWS_ID,
                      aws_secret_access_key=AWS_SECRET)
 
-    @property
-    def bucket(self):
-        return self._bucket
-
     def _load_reg_model(self):
         with tempfile.TemporaryFile() as fp:
             reg_key = 'rf_score_reg.joblib'

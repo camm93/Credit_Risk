@@ -14,7 +14,7 @@ def set_intro():
                    "to access sources of funding, systems of banking, and the option of acquiring credits."),
             html.P("Access to a banking system can create opportunities, create jobs, facilitate commerce, " +
                    "and unlock wealth, nonetheless, only 87% of Colombian adults are registered in " +
-                   "the banking system, leaving aroung five million Colombians without this benefit. " +
+                   "the banking system, leaving over five million Colombians without these benefits. " +
                    "The following table summarizes some statistics of the Colombian Financial System.")
         ],
         id="intro-div",
