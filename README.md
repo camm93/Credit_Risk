@@ -1,5 +1,7 @@
 # Credit_Risk
 
+Temporarily available at http://creditrisk.eastus.cloudapp.azure.com:8050/scorecard until the free Azure coupon expires XD
+
 ## Cloning this repo:
 On a terminal...
 - Alternative 1
